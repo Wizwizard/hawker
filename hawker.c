@@ -741,6 +741,10 @@ main (int argc, char **argv)
         // memory it can use (in bytes). We use the values
         // passed to us in p.cpu_pct and p.mem_limit, and
         // translate those into the cgroup file entries
+
+        set_cpu_share(pid, p.cpu_pct);
+        set_mem_limit(pid, p.mem_limit);
+
             
         // we hang up both ends of the pipe to let the child
         // know that we've written the appropriate files. It 
