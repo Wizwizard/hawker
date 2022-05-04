@@ -714,6 +714,7 @@ main (int argc, char **argv)
 
         set_child_pid(pid);
 
+
         // FILL ME IN: we have to setup the PID namespace now
         // This will involve writing /proc/<PID>/uid_map, gid_map
         set_child_user_maps(pid, 0, getuid());
