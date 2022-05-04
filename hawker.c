@@ -311,7 +311,7 @@ child_exec (void * arg)
         
         chroot(hkr_get_img(p->img));
         cndir("/");
-        sethostname(new_hostname);
+        sethostname(new_hostname, strlen(DEFAULT_HOSTNAME));
         
         execvp(p->cmd, p->argv);
 
