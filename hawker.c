@@ -679,7 +679,10 @@ main (int argc, char **argv)
         // The SIGCHILD indicates the signal which should
         // be delivered to the parent process when the
         // child exits (if does, indeed, exit);
-        clone_flags = SIGCHLD;
+        clone_flags = (SIGCHLD 
+                        | CLONE_NEWUTS | CLONE_NEWPID | CLONE_NEWUSER
+                        | CLONE_NEWNS | CLONE_NEWNET | CLONE_NEWIPC
+                        | 0);
 
         // FILL ME IN: when we create a new process using clone(), we
         // must give the new process a stack. We are in charge of allocating
@@ -687,8 +690,9 @@ main (int argc, char **argv)
         // malloc() is of course easier, but mmap() gives us more control
         // over the characteristics of that memory.
 
+        child_stack = malloc(DEFAULT_STACKSIZE);
+
         // FILL ME IN: remove this when you get a stack set up
-        exit(EXIT_SUCCESS);
 
         // we'll use this pipe for communicating with the child
         if (pipe(p.pipefd) != 0) {
@@ -712,6 +716,7 @@ main (int argc, char **argv)
 
         // FILL ME IN: we have to setup the PID namespace now
         // This will involve writing /proc/<PID>/uid_map, gid_map
+        set_child_user_maps(pid, 0, getuid());
 
         // BEGIN RESOURCE CONTROL SETUP
         
