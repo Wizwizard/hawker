@@ -310,7 +310,7 @@ child_exec (void * arg)
         // (4) execute the command that the user gave us
         
         chroot(hkr_get_img(p->img));
-        cndir("/");
+        chdir("/");
         sethostname(new_hostname, strlen(DEFAULT_HOSTNAME));
         
         execvp(p->cmd, p->argv);
