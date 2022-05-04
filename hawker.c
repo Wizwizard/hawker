@@ -308,6 +308,12 @@ child_exec (void * arg)
         // (2) actually move into that root
         // (3) change our hostname
         // (4) execute the command that the user gave us
+        
+        chroot(hkr_get_img(p->img));
+        cndir("/");
+        sethostname(new_hostname);
+        
+        execvp(p->cmd, p->argv);
 
         // should never reach here
         exit(EXIT_FAILURE);
